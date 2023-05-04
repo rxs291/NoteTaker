@@ -9,7 +9,7 @@ const readFromFile = util.promisify(fs.readFile);
 router.get("/", (req, res) => {
   console.info(`${req.method} request received to GET NOTES`);
 
-  readFromFile("./db/db.json").then((data) => res.json(JSON.parse(data)));
+  readFromFile("db/db.json").then((data) => res.json(JSON.parse(data)));
 });
 
 // respond to a DELETE request at the /api/notes/:id URL by removing a note from the JSON file
