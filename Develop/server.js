@@ -43,23 +43,27 @@ app.delete("/api/notes/:id", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      let parsedNotes = JSON.parse(data);
-      console.log(parsedNotes.length);
-      for (i = 0; i < parsedNotes.length; i++) {
-        console.log(parsedNotes[i])
-        if(parsedNotes[i].id === req.params.id ){
-            console.log(parsedNotes[i])
-            let notes = parsedNotes.splice(parsedNotes[i], 1)
-            
+      const parsedNotes = JSON.parse(data);
+      console.log(parsedNotes[0]);
+      for (let i = 0; i < parsedNotes.length; i++) {
+        if (parsedNotes[i].id === req.params.id) {
+          let index = parsedNotes.indexOf(parsedNotes[i]);
+
+          parsedNotes.splice(index, 1);
+          fs.writeFile(
+            `./db/db.json`,
+            JSON.stringify(parsedNotes, null),
+            (err) =>
+              err
+                ? console.error(err)
+                : console.log(
+                    `Note for ${newNote.title} has been REMOVED FROM JSON file`
+                  )
+          );
         }
       }
     }
   });
-//   console.log(parsedReviews);
-  //   console.log(req.params.id)
-  //   for (i = 0; i<parsedReviews.length; i++){
-  //     console.log('this works')
-  //   }
 });
 
 app.post("/api/notes", (req, res) => {
@@ -79,18 +83,15 @@ app.post("/api/notes", (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        const parsedReviews = JSON.parse(data);
-        parsedReviews.push(newNote);
+        const parsedNotes = JSON.parse(data);
+        parsedNotes.push(newNote);
 
-        fs.writeFile(
-          `./db/db.json`,
-          JSON.stringify(parsedReviews, null),
-          (err) =>
-            err
-              ? console.error(err)
-              : console.log(
-                  `Review for ${newNote.title} has been written to JSON file`
-                )
+        fs.writeFile(`./db/db.json`, JSON.stringify(parsedNotes, null), (err) =>
+          err
+            ? console.error(err)
+            : console.log(
+                `Review for ${newNote.title} has been written to JSON file`
+              )
         );
       }
     });
