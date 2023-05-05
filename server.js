@@ -21,8 +21,10 @@ app.get('/notes', (req, res) =>
 );
 
 // respond to a GET request at the root URL with the index.html file
-app.get('/', (req, res) =>
+app.get('/', (req, res) => {
+console.log("THIS IS HOMEPAGE")
   res.sendFile(path.join(__dirname, '/public/index.html'))
+}
 ); 
 
 // Start listening on the specified port, just as important as initializing the port

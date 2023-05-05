@@ -13,10 +13,8 @@ router.get('/', (req, res) => {
 });
 
 // respond to a DELETE request at the /api/notes/:id URL by removing a note from the JSON file
-router.delete('/:id', (req, res) => {
-
-
-  console.info(req.body);
+router.delete('/:id', (req, res) => { 
+ 
   console.info(`${req.method} request received to DELETE A NOTE`);
 
   //reading the db.json file, parsing the data, comparing the ID that was passed to every ID in the parsed data, then when matched, splicing the index of said ID, and writing the file back to db.json with the newly sliced data.
@@ -36,12 +34,17 @@ router.delete('/:id', (req, res) => {
               : console.log(
                   `Note has been REMOVED FROM JSON file`
                 ),
-                res.redirect('/')
+                // res.redirect('/')
           );
         }
       }
     }
-  });
+  })
+
+
+  res.json({ok: true})
+  // res.redirect('/')
+
 
 
 
