@@ -1,23 +1,23 @@
-const router = require("express").Router();
-const fs = require("fs");
-const util = require("util");
-const uuid = require("../helpers/uuid");
+const router = require('express').Router();
+const fs = require('fs');
+const util = require('util');
+const uuid = require('../helpers/uuid');
 
 // promisify fs.readFile for async/await syntax
 const readFromFile = util.promisify(fs.readFile);
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   console.info(`${req.method} request received to GET NOTES`);
 
-  readFromFile("db/db.json").then((data) => res.json(JSON.parse(data)));
+  readFromFile('db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
 // respond to a DELETE request at the /api/notes/:id URL by removing a note from the JSON file
-router.delete("/:id", (req, res) => {
+router.delete('/:id', (req, res) => {
   console.info(req.body);
   console.info(`${req.method} request received to DELETE A NOTE`);
   //reading the db.json file, parsing the data, comparing the ID that was passed to every ID in the parsed data, then when matched, splicing the index of said ID, and writing the file back to db.json with the newly sliced data.
-  fs.readFile("db/db.json", "utf-8", (err, data) => {
+  fs.readFile('db/db.json', 'utf-8', (err, data) => {
     if (err) {
       console.log(err);
     } else {
@@ -41,7 +41,7 @@ router.delete("/:id", (req, res) => {
   });
 });
 ////at the given url, when fetched, adds the note information to the db.json data
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   console.info(`${req.method} request received to ADD A NOTE`);
 
   const { title, text } = req.body;
@@ -54,7 +54,7 @@ router.post("/", (req, res) => {
       id: uuid(),
     };
 
-    fs.readFile("db/db.json", "utf-8", (err, data) => {
+    fs.readFile('db/db.json', 'utf-8', (err, data) => {
       if (err) {
         console.log(err);
       } else {
@@ -74,7 +74,7 @@ router.post("/", (req, res) => {
 
     // Send a response with status and the new note
     const response = {
-      status: "success",
+      status: 'success',
       body: newNote,
     };
     console.log(response);
@@ -82,7 +82,7 @@ router.post("/", (req, res) => {
     res.status(201).json(response);
   } else {
     // If either title or text is missing, send an error response
-    res.status(500).json("Error in posting notes");
+    res.status(500).json('Error in posting notes');
   }
 });
 
