@@ -18,7 +18,7 @@ router.delete('/:id', (req, res) => {
 
   console.info(req.body);
   console.info(`${req.method} request received to DELETE A NOTE`);
-  
+
   //reading the db.json file, parsing the data, comparing the ID that was passed to every ID in the parsed data, then when matched, splicing the index of said ID, and writing the file back to db.json with the newly sliced data.
   fs.readFile('db/db.json', 'utf-8', (err, data) => {
     if (err) {
@@ -34,7 +34,7 @@ router.delete('/:id', (req, res) => {
             err
               ? console.error(err)
               : console.log(
-                  `Note for ${newNote.title} has been REMOVED FROM JSON file`
+                  `Note has been REMOVED FROM JSON file`
                 ),
                 res.redirect('/')
           );
