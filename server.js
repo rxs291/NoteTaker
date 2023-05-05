@@ -9,9 +9,9 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// serve static files from the "public" directory
-app.use(express.static("public"));
 app.use('/api', api);
+// serve static files from the "public" directory
+app.use(express.static("public")); 
 
 
 
